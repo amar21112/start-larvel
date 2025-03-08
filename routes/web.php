@@ -8,3 +8,9 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('fillable' , 'CrudController@getOffers');
+
+Route::group(['prefix' => 'offers'],function(){
+    Route::get('create' , 'CrudController@create');
+    Route::post('store' , 'CrudController@store')->name('offers.store');
+});
