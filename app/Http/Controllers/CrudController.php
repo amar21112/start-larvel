@@ -43,8 +43,9 @@ class CrudController extends Controller
 
 
         if($validator->fails()){
-            return $validator->errors();
+//            return $validator->errors();
 //            return $validator->errors()->first();
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
         //insert data
 
@@ -54,7 +55,7 @@ class CrudController extends Controller
             'offer_details' => $request->offer_details
         ]);
 
-        return 'saved';
+        return redirect()->back()->with(['success' => 'Offer created successfully']);
     }
 
     protected function getRules(){
