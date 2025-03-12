@@ -68,11 +68,11 @@ class CrudController extends Controller
     protected function getMessages()
     {
         return $messages = [
-            'offer_name.required'=>'offer name must have vlaue',
-            'offer_name.unique'=>'offer name already exists',
-            'offer_price.required'=>'offer price must have value',
-            'offer_price.numeric'=>'offer price must be numeric',
-            'offer_details.required'=>'offer details must have value',
+            'offer_name.required'=>__('messages.offer_name_required'),
+            'offer_name.unique'=>__('messages.offer_name_unique'),
+            'offer_price.required'=>__('messages.offer_price_required'),
+            'offer_price.numeric'=>__('messages.offer_price_numeric'),
+            'offer_details.required'=>__('messages.offer_details_required'),
         ];
     }
 }
