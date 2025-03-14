@@ -79,23 +79,13 @@
                     </li>
                 @endforeach
 
-{{--                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)--}}
-{{--                        <li>--}}
-{{--                            <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">--}}
-{{--                                {{ $properties['native'] }}--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endforeach--}}
-
-
-
         </div>
     </nav>
         <div class="flex-center position-ref full-height">
 
             <div class="content">
                 <div class="title m-b-md">
-                    Add Your Offer.
+                    {{__("creations.add_your_offer")}}
                 </div>
                 @if(Session::has('success'))
                     <div class="alert alert-success" role="alert">
@@ -109,15 +99,22 @@
 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
 
                     <div class = "form-group">
-                        <label for ="OfferName">Offer Name</label>
-                        <input type="text" class="form-control" name ="offer_name" placeholder="Enter offer name">
-                        @error('offer_name')
+                        <label for ="OfferName">{{__("creations.offer_name_ar")}}</label>
+                        <input type="text" class="form-control" name ="name_ar" placeholder="Enter offer name">
+                        @error('name_ar')
                             <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
+                    </div>
+                    <div class = "form-group">
+                        <label for ="OfferName">{{__("creations.offer_name_en")}}</label>
+                        <input type="text" class="form-control" name ="name_en" placeholder="Enter offer name">
+                        @error('name_en')
+                        <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
 
                     <div class = "form-group">
-                        <label for ="OfferPrice">Offer Price</label>
+                        <label for ="OfferPrice">{{__("creations.offer_price")}}</label>
                         <input type="text" class="form-control" name ="offer_price" placeholder="Enter offer price">
                         @error('offer_price')
                         <small class="form-text text-danger">{{$message}}</small>
@@ -125,14 +122,22 @@
                     </div>
 
                     <div class = "form-group">
-                        <label for ="OfferDetails">Offer Details</label>
-                        <input type="text" class="form-control" name ="offer_details" placeholder="Enter offer details">
-                        @error('offer_details')
+                        <label for ="OfferDetails">{{__("creations.offer_details_ar")}}</label>
+                        <input type="text" class="form-control" name ="detail_ar" placeholder="Enter offer details">
+                        @error('detail_ar')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
+                    </div>
+
+                    <div class = "form-group">
+                        <label for ="OfferDetails">{{__("creations.offer_details_en")}}</label>
+                        <input type="text" class="form-control" name ="detail_en" placeholder="Enter offer details">
+                        @error('detail_en')
                         <small class="form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
                     <div>
-                        <button type = "submit" class="btn btn-primary">Save Offer</button>
+                        <button type = "submit" class="btn btn-primary">{{__("creations.save")}}</button>
                     </div>
                 </form>
             </div>
