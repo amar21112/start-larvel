@@ -6,7 +6,7 @@ use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Mcamara\LaravelLocalization\LaravelLocalization;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CrudController extends Controller
 {
@@ -65,13 +65,22 @@ class CrudController extends Controller
     public function getAllOffers()
     {
 
-        $locale = app()->getLocale();
+    /*  $locale = app()->getLocale();
         if($locale == 'ar')
             $offers = Offer::select('offer_id','name_ar','offer_price','detail_ar')->get();
         else
-            $offers = Offer::select('offer_id','name_en','offer_price','detail_en')->get();
+            $offers = Offer::select('offer_id','name_en','offer_price','detail_en')->get();*/
 
-        return view('offers.all' , compact('offers') , ["lang" => $locale] );
+        $locale = LaravelLocalization::getCurrentLocale();
+        $offers = Offer::select(
+            'offer_id',
+            'offer_price',
+            'name_'.$locale.' as name',
+            'detail_'.$locale.' as detail'
+        )->get();
+
+        return view('offers.all', compact('offers'));
+//        return view('offers.all' , compact('offers') , ["lang" => $locale] );
     }
 //    protected function getRules(){
 //        return  $rules =[

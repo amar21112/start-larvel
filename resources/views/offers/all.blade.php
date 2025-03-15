@@ -93,27 +93,16 @@
         </thead>
 
         <tbody>
-            @if($lang == 'ar')
                 @foreach ($offers as $offer)
 
                     <tr>
                         <td>{{$offer->offer_id}}</td>
-                        <td>{{$offer->name_ar}}</td>
+                        <td>{{$offer->name}}</td>
                         <td>{{$offer->offer_price}}</td>
-                        <td>{{$offer->detail_ar}}</td>
+                        <td>{{$offer->detail}}</td>
                     </tr>
                 @endforeach
-            @elseif($lang == 'en')
-                @foreach ($offers as $offer)
 
-                    <tr>
-                        <td>{{$offer->offer_id}}</td>
-                        <td>{{$offer->name_en}}</td>
-                        <td>{{$offer->offer_price}}</td>
-                        <td>{{$offer->detail_en}}</td>
-                    </tr>
-                @endforeach
-            @endif
         </tbody>
     </table>
     </body>
