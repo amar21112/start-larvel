@@ -13,6 +13,6 @@ return [
     "operation"=>"operation",
     "update"=>"update",
     "delete"=>"delete",
-
+    "photo"=>"offer photo",
     "save" =>"save",
 ];

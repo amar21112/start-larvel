@@ -51,7 +51,14 @@ class CrudController extends Controller
 //        }
 //        //insert data
 
+        $file_extention = $request->photo->getClientOriginalExtension();
+        $file_name = time().'.'.$file_extention;
+        $path = 'images/offers';
+        $request->photo->move($path,$file_name);
+
+
         Offer::create([
+            'photo' => $file_name,
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'offer_price' => $request->offer_price ,

@@ -14,5 +14,5 @@ return [
     "operation" =>"العمليات",
     "update"=>"تحديث",
     "delete"=>"حذف",
-
+    "photo"=>"صورة العرض",
 ];

@@ -93,10 +93,17 @@
                     </div>
                     <br>
                 @endif
-                <form method="POST" action="{{Route('offers.store')}}">
+                <form method="POST" action="{{Route('offers.store')}}" enctype="multipart/form-data">
 
                     @csrf
 {{--                    <input name="_token" value="{{csrf_token()}}">--}}
+                    <div class = "form-group">
+                        <label for ="OfferName">{{__("creations.photo")}}</label>
+                        <input type="file" class="form-control" name ="photo" placeholder="choice photo">
+                        @error('photo')
+                        <small class="form-text text-danger">{{$message}}</small>
+                        @enderror
+                    </div>
 
                     <div class = "form-group">
                         <label for ="OfferName">{{__("creations.offer_name_ar")}}</label>
