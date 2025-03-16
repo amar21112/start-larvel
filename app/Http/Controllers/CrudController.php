@@ -7,9 +7,12 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Traits\OfferTrait;
 
 class CrudController extends Controller
 {
+
+    use OfferTrait;
     /**
      * Create a new controller instance.
      *
@@ -51,11 +54,7 @@ class CrudController extends Controller
 //        }
 //        //insert data
 
-        $file_extention = $request->photo->getClientOriginalExtension();
-        $file_name = time().'.'.$file_extention;
-        $path = 'images/offers';
-        $request->photo->move($path,$file_name);
-
+        $file_name = $this->saveImage($request->photo , 'images/offers');
 
         Offer::create([
             'photo' => $file_name,
