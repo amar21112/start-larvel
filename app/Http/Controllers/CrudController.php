@@ -73,7 +73,7 @@ class CrudController extends Controller
 
         $locale = LaravelLocalization::getCurrentLocale();
         $offers = Offer::select(
-            'offer_id',
+            'id',
             'offer_price',
             'name_'.$locale.' as name',
             'detail_'.$locale.' as detail'
@@ -100,4 +100,28 @@ class CrudController extends Controller
 //        ];
 //    }
 
+    public function editOffer($offer_id){
+//        Offer::findOrFail($offer_id);
+
+       /* $offer = Offer::find($offer_id);
+        if(!$offer){
+            return redirect()->back();
+        }*/
+
+      $offer =   Offer::select('id' ,'name_ar','name_en','offer_price','detail_ar','detail_en')->find($offer_id);
+        if(!$offer){
+            return redirect()->back();
+        }
+        return view('offers.edit', compact('offer'));
+    }
+
+    public function updateOffer(OfferRequest $request, $offer_id){
+        $offer =   Offer::find($offer_id);
+        if(!$offer){
+            return redirect()->back();
+        }
+
+        $offer->update($request->all());
+        return redirect()->back()->with(['success' => 'Offer updated successfully']);
+    }
 }

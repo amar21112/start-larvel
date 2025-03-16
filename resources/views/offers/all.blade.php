@@ -85,10 +85,11 @@
         <thead>
             <tr>
 
-                <th scope="col">#</th>
+{{--                <th scope="col">#</th>--}}
                 <th scope="col">{{__("creations.offer_name")}}</th>
                 <th scope="col">{{__("creations.offer_price")}}</th>
                 <th scope="col">{{__("creations.offer_details")}}</th>
+                <th scope="col">{{__("creations.operation")}}</th>
             </tr>
         </thead>
 
@@ -96,10 +97,11 @@
                 @foreach ($offers as $offer)
 
                     <tr>
-                        <td>{{$offer->offer_id}}</td>
+{{--                        <td>{{$offer->id}}</td>--}}
                         <td>{{$offer->name}}</td>
                         <td>{{$offer->offer_price}}</td>
                         <td>{{$offer->detail}}</td>
+                        <td><a href="{{url("offers/edit/".$offer->id)}}" class="btn btn-success">{{__("creations.update")}}</a></td>
                     </tr>
                 @endforeach
 
