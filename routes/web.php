@@ -25,5 +25,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         Route::post('update/{offer_id}', 'CrudController@updateOffer')->name('offers.update');
 
     });
-    Route::get('youtube', 'CrudController@getVideo')->name('youtube')->middleware('auth');
+    Route::get('youtube', 'ShowVideo@getVideo')->name('youtube')->middleware('auth');
 });

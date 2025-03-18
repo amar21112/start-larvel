@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\VideoViewer;
+use App\Models\Viewer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 
 class IncreaseCounter
 {
@@ -31,8 +33,14 @@ class IncreaseCounter
     }
 
     public function updateViewer($video){
+        $user_id = Auth::id();
+        $video_id = $video->id;
 
-        $video->viewer =$video->viewer + 1;
+        $isView = Viewer::where('user_id', $user_id)->where('video_id', $video_id)->first();
+        if(!$isView){
+            $video->viewer =$video->viewer + 1;
+            Viewer::create(['user_id'=>$user_id,'video_id'=>$video_id]);
+        }
 
         $video->save();
     }

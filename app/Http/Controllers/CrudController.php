@@ -133,10 +133,10 @@ class CrudController extends Controller
         return redirect()->back()->with(['success' => 'Offer updated successfully']);
     }
 
-    public function getVideo()
-    {
-        $video = Video::first();
-        event(new VideoViewer($video));
-        return view('video')->with('video', $video);
-    }
+//    public function getVideo()
+//    {
+//        $video = Video::first();
+//        event(new VideoViewer($video));
+//        return view('video')->with('video', $video);
+//    }
 }
