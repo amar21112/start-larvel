@@ -80,7 +80,17 @@
 
         </div>
     </nav>
-
+    @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{Session::get('success')}}
+        </div>
+        <br>
+    @elseif(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{Session::get('error')}}
+        </div>
+        <br>
+    @endif
     <table class="table">
         <thead>
             <tr>
@@ -89,6 +99,7 @@
                 <th scope="col">{{__("creations.offer_name")}}</th>
                 <th scope="col">{{__("creations.offer_price")}}</th>
                 <th scope="col">{{__("creations.offer_details")}}</th>
+                <th scope="col">{{__("creations.offer_photo")}}</th>
                 <th scope="col">{{__("creations.operation")}}</th>
             </tr>
         </thead>
@@ -101,7 +112,11 @@
                         <td>{{$offer->name}}</td>
                         <td>{{$offer->offer_price}}</td>
                         <td>{{$offer->detail}}</td>
-                        <td><a href="{{url("offers/edit/".$offer->id)}}" class="btn btn-success">{{__("creations.update")}}</a></td>
+                        <td><img style="width: 50px; height: auto;" src="{{asset('images/offers/'.$offer->photo)}}"></td>
+                        <td>
+                            <a href="{{url("offers/edit/".$offer->id)}}" class="btn btn-success">{{__("creations.update")}}</a>
+                            <a href="{{url("offers/delete/".$offer->id)}}" class="btn btn-danger">{{__("creations.delete")}}</a>
+                        </td>
                     </tr>
                 @endforeach
 

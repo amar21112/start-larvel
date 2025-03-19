@@ -7,7 +7,7 @@ return [
     "offer_price" =>"سعر العرض",
     "offer_details_ar" =>"تفاصيل العرض بالعربية",
     "offer_details_en" =>"تفاصيل العرض بالانجليزية",
-
+    "offer_photo"=>"الصورة",
     "offer_details" =>"تفاصيل العرض",
     "offer_name"=>"اسم العرض",
     "save" =>"حفظ",

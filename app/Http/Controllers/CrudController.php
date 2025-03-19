@@ -25,6 +25,7 @@ class CrudController extends Controller
 
     }
 
+
     public function getOffers(){
         return Offer::get();
 
@@ -83,6 +84,7 @@ class CrudController extends Controller
         $offers = Offer::select(
             'id',
             'offer_price',
+            'photo',
             'name_'.$locale.' as name',
             'detail_'.$locale.' as detail'
         )->get();
@@ -118,7 +120,7 @@ class CrudController extends Controller
 
       $offer =   Offer::select('id' ,'name_ar','name_en','offer_price','detail_ar','detail_en')->find($offer_id);
         if(!$offer){
-            return redirect()->back();
+            return redirect()->back()->with(['error'=>'offer not found']);
         }
         return view('offers.edit', compact('offer'));
     }
@@ -126,17 +128,23 @@ class CrudController extends Controller
     public function updateOffer(OfferRequest $request, $offer_id){
         $offer =   Offer::find($offer_id);
         if(!$offer){
-            return redirect()->back();
+            return redirect()->back()->with(['error'=>'offer not found']);
         }
 
         $offer->update($request->all());
         return redirect()->back()->with(['success' => 'Offer updated successfully']);
     }
 
-//    public function getVideo()
-//    {
-//        $video = Video::first();
-//        event(new VideoViewer($video));
-//        return view('video')->with('video', $video);
-//    }
+    public function deleteOffer($offer_id){
+        $offer = Offer::find($offer_id);
+        if(!$offer){
+            return redirect()->back()->with(['error' => 'Offer not exist']);
+        }
+
+        $filename = $offer->photo;
+        $this->deleteImage( 'images/offers/',$filename);
+        $offer->delete();
+        return redirect()->route("offers.all" , $offer_id)->with(['success' => 'Offer deleted successfully']);
+    }
+
 }

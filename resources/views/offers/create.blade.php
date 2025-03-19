@@ -92,6 +92,11 @@
                         {{Session::get('success')}}
                     </div>
                     <br>
+                @elseif(Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{Session::get('error')}}
+                    </div>
+                    <br>
                 @endif
                 <form method="POST" action="{{Route('offers.store')}}" enctype="multipart/form-data">
 

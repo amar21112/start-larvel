@@ -13,4 +13,12 @@ trait OfferTrait{
 
         return $file_name;
     }
+    public function deleteImage($folder,$image)
+    {
+        $file_path = public_path($folder .$image);
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
+
+    }
 }

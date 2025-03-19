@@ -7,7 +7,7 @@ return [
     "offer_price" =>"offer price",
     "offer_details_ar" =>"offer details in arabic",
     "offer_details_en" =>"offer details in english",
-
+    "offer_photo"=>"photo",
     "offer_details" =>"offer details",
     "offer_name"=>"offer name",
     "operation"=>"operation",
