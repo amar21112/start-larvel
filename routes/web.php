@@ -28,3 +28,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
     });
     Route::get('youtube', 'ShowVideo@getVideo')->name('youtube')->middleware('auth');
 });
+
+Route::group(['prefix' => 'ajax-offers'], function () {
+    Route::get('create', 'Front\OfferController@create' )->name('ajaxOfferCreate');
+    Route::post('store', 'Front\OfferController@store')->name('ajaxOfferStore');
+});

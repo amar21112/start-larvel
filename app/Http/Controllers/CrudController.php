@@ -142,7 +142,9 @@ class CrudController extends Controller
         }
 
         $filename = $offer->photo;
-        $this->deleteImage( 'images/offers/',$filename);
+        if (!empty($filename))
+            $this->deleteImage( 'images/offers/',$filename);
+
         $offer->delete();
         return redirect()->route("offers.all" , $offer_id)->with(['success' => 'Offer deleted successfully']);
     }
