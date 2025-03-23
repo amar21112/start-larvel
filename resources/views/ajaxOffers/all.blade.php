@@ -1,70 +1,18 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+    <div class="alert alert-success" id="msg_success_delete" role="alert" style="display: none;">
+        Offer deleted successfully
+    </div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <div class="alert alert-danger" id="msg_fail_delete" role="alert" style="display: none;">
+        fail offer deleting
+    </div>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <div class="alert alert-danger" id="msg_fail_edit" role="alert" style="display: none;">
+        fail offer editing
+    </div>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -76,51 +24,72 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">{{ $properties['native'] }} </a>
                     </li>
-                @endforeach
+            @endforeach
 
         </div>
     </nav>
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            {{Session::get('success')}}
-        </div>
-        <br>
-    @elseif(Session::has('error'))
-        <div class="alert alert-danger" role="alert">
-            {{Session::get('error')}}
-        </div>
-        <br>
-    @endif
+
     <table class="table">
         <thead>
-            <tr>
+        <tr>
 
-{{--                <th scope="col">#</th>--}}
-                <th scope="col">{{__("creations.offer_name")}}</th>
-                <th scope="col">{{__("creations.offer_price")}}</th>
-                <th scope="col">{{__("creations.offer_details")}}</th>
-                <th scope="col">{{__("creations.offer_photo")}}</th>
-                <th scope="col">{{__("creations.operation")}}</th>
-            </tr>
+            {{--                <th scope="col">#</th>--}}
+            <th scope="col">{{__("creations.offer_name")}}</th>
+            <th scope="col">{{__("creations.offer_price")}}</th>
+            <th scope="col">{{__("creations.offer_details")}}</th>
+            <th scope="col">{{__("creations.offer_photo")}}</th>
+            <th scope="col">{{__("creations.operation")}}</th>
+        </tr>
         </thead>
 
         <tbody>
-                @foreach ($offers as $offer)
+        @foreach ($offers as $offer)
 
-                    <tr>
-{{--                        <td>{{$offer->id}}</td>--}}
-                        <td>{{$offer->name}}</td>
-                        <td>{{$offer->offer_price}}</td>
-                        <td>{{$offer->detail}}</td>
-                        <td><img style="width: 50px; height: auto;" src="{{asset('images/offers/'.$offer->photo)}}"></td>
-                        <td>
-                            <a href="{{url("offers/edit/".$offer->id)}}" class="btn btn-success">{{__("creations.update")}}</a>
-                            <a href="{{url("offers/delete/".$offer->id)}}" class="btn btn-danger">{{__("creations.delete")}}</a>
-                        </td>
-                    </tr>
-                @endforeach
+            <tr class="offer_data_{{$offer->id}}">
+                {{--                        <td>{{$offer->id}}</td>--}}
+                <td>{{$offer->name}}</td>
+                <td>{{$offer->offer_price}}</td>
+                <td>{{$offer->detail}}</td>
+                <td><img style="width: 50px; height: auto;" src="{{asset('images/offers/'.$offer->photo)}}"></td>
+                <td>
+                    <a href="{{route('ajaxOfferEdit' , $offer->id)}}" class="update_button btn btn-success">update</a>
+                    <a offer_id="{{$offer->id}}"  class="delete_button btn btn-danger">delete</a>
+                </td>
+            </tr>
+        @endforeach
 
         </tbody>
     </table>
-    </body>
-</html>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).on('click' , '.delete_button' ,function (e){
+     e.preventDefault();
+    var id = $(this).attr('offer_id');
+     $.ajax({
+             type: 'post',
+             url: '{{Route('ajaxOfferDelete')}}',
+             data:{
+                    '_token':'{{csrf_token()}}',
+                    id
+             },
+            success:function (data){
+                if(data.status === true){
+                    $('#msg_success').show();
+                    $('.offer_data_'+data.id).remove();
+                }
+                if(data.status === false){
+                    $('#msg_fail').show();
+                }
+            },
+             error:function (reject){
+
+             }
+
+         }
+     )
+    })
+
+</script>
+@endsection

@@ -17,17 +17,7 @@
             <div class="title m-b-md">
                 {{__("creations.add_your_offer")}}
             </div>
-            @if(Session::has('success'))
-                <div class="alert alert-success" role="alert">
-                    {{Session::get('success')}}
-                </div>
-                <br>
-            @elseif(Session::has('error'))
-                <div class="alert alert-danger" role="alert">
-                    {{Session::get('error')}}
-                </div>
-                <br>
-            @endif
+
             <form method="POST" id="saveOfferForm" enctype="multipart/form-data">
 
                 @csrf
