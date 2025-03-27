@@ -18,4 +18,22 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+   /* protected function authenticate($request, array $guards)
+    {
+        if (empty($guards)) {
+            $guards = ['web'];
+        }
+
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return Auth::shouldUse($guard);
+            }
+        }
+
+        throw new AuthenticationException(
+            'Unauthenticated.', $guards, $this->redirectTo($request)
+        );
+    }*/
+
 }

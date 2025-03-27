@@ -7,8 +7,13 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
+
     return view('welcome');
 });
+
+Route::get('Not-allowed', function () {
+    return 'Not-Allowed';
+})->name('prevent');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('fillable' , 'CrudController@getOffers');
@@ -37,3 +42,22 @@ Route::group(['prefix' => 'ajax-offers'], function () {
     Route::get('edit/{offer_id}', 'Front\OfferController@editOffer')->name('ajaxOfferEdit');
     Route::post('update', 'Front\OfferController@updateOffer')->name('ajaxOfferUpdate');
 });
+
+
+########## Authentication and guards ##############
+Route::group(['middleware'=>'CheckAge' , 'namespace'=>'Auth'],function(){
+
+Route::get('adult' , 'CustomAuthController@adult')->name('adults');
+});
+Route::get('site' , 'Auth\CustomAuthController@site')->name('site')->middleware('auth:web');
+
+Route::get('admin' , 'Auth\AdminController@admin')->middleware('auth:admin')->name('admin');
+Route::get('admin/login' , 'Auth\AdminController@adminLogin')->name('admin.login');
+Route::post('verifiedAdmin' , 'Auth\AdminController@adminLoginVerified')->name('verified.admin.login');
+//
+//Route::middleware(['web'])->group(function () {
+//    Route::get('admin', 'Auth\AdminController@admin')->middleware('auth:admin')->name('admin');
+//    Route::get('admin/login', 'Auth\AdminController@adminLogin')->name('admin.login');
+//    Route::post('verifiedAdmin', 'Auth\AdminController@adminLoginVerified')->name('verified.admin.login');
+//});
+
