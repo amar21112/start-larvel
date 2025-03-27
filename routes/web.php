@@ -54,10 +54,9 @@ Route::get('site' , 'Auth\CustomAuthController@site')->name('site')->middleware(
 Route::get('admin' , 'Auth\AdminController@admin')->middleware('auth:admin')->name('admin');
 Route::get('admin/login' , 'Auth\AdminController@adminLogin')->name('admin.login');
 Route::post('verifiedAdmin' , 'Auth\AdminController@adminLoginVerified')->name('verified.admin.login');
-//
-//Route::middleware(['web'])->group(function () {
-//    Route::get('admin', 'Auth\AdminController@admin')->middleware('auth:admin')->name('admin');
-//    Route::get('admin/login', 'Auth\AdminController@adminLogin')->name('admin.login');
-//    Route::post('verifiedAdmin', 'Auth\AdminController@adminLoginVerified')->name('verified.admin.login');
-//});
 
+
+# RELATION
+Route::group(['namespace'=>'Relations'],function(){
+    Route::get('has-one' ,'RelationController@hasOneRelation');
+});
