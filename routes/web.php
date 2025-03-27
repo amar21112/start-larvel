@@ -59,4 +59,7 @@ Route::post('verifiedAdmin' , 'Auth\AdminController@adminLoginVerified')->name('
 # RELATION
 Route::group(['namespace'=>'Relations'],function(){
     Route::get('has-one' ,'RelationController@hasOneRelation');
+    Route::get('has-one-reverse' ,'RelationController@hasOneRelationReverse');
+    Route::get('users-with-phones' ,'RelationController@getUserHasPhone');
+    Route::get('users-without-phone' ,'RelationController@getUserWithoutPhone');
 });
