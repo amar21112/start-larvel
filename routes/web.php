@@ -58,8 +58,26 @@ Route::post('verifiedAdmin' , 'Auth\AdminController@adminLoginVerified')->name('
 
 # RELATION
 Route::group(['namespace'=>'Relations'],function(){
+    // one to one
     Route::get('has-one' ,'RelationController@hasOneRelation');
     Route::get('has-one-reverse' ,'RelationController@hasOneRelationReverse');
     Route::get('users-with-phones' ,'RelationController@getUserHasPhone');
     Route::get('users-without-phone' ,'RelationController@getUserWithoutPhone');
+
+    // one to many
+    Route::get('hospital-has-many' , 'RelationController@getHospitalDoctors');
+    Route::get('hospitals' , 'RelationController@getAllHospitals')->name('hospitals');
+    Route::get('doctors' , 'RelationController@getAllDoctors')->name('doctors');
+
+    Route::get('doctors/{hospital_id}' , 'RelationController@getAllDoctorsOfHospital')->name('doctorsOfHospital');
+    Route::get('delete-hospital/{hospital_id}' , 'RelationController@deleteHospital')->name('delete.hospital');
+    Route::get('delete-doctor/{doctor_id}' , 'RelationController@deleteDoctor')->name('delete.doctor');
+
+    Route::get('hospital_has_doctors' , 'RelationController@getHospitalsHasDoctors');
+    Route::get('hospital_has_doctors_male' , 'RelationController@getHospitalsHasDoctorsMales');
+    Route::get('hospital_Not_has_doctors' , 'RelationController@getHospitalsNotHasDoctors');
+
+
 });
+
+

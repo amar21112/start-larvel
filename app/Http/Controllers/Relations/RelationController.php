@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Relations;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
+use App\Models\Hospital;
 use App\User;
 use App\Models\Phone;
 
@@ -49,5 +51,95 @@ class RelationController extends Controller
     public function getUserWithoutPhone()
     {
           return User::whereDoesntHave('phone')->get();
+    }
+
+    public function getHospitalDoctors()
+    {
+//       $hospital =  Hospital::with('doctors')->get();
+
+//       $hospital =  Hospital::with('doctors')->find(1);
+
+/*       $hospital = Hospital::find(1);
+       return $hospital->doctors;*/
+
+
+        $hospital = Hospital::with('doctors')->find(1);
+
+        $doctors = $hospital->doctors;
+
+//        return $doctors;
+
+//        foreach ($doctors as $doctor) {
+//            echo $doctor->name . "<br>";
+//        }
+//
+//        $doctor = Doctor::find(3);
+//        return $doctor->hospital->name;
+
+        $doctor = Doctor::with('hospital')->get();
+        return $doctor;
+
+    }
+
+    public function getAllHospitals()
+    {
+//        $hospitals = Hospital::all();
+        $hospitals = Hospital::select('id' , 'name' , 'address')->get();
+        $cnt =1;
+        return view('doctors.hospitals',compact('hospitals','cnt'));
+    }
+    public function getAllDoctorsOfHospital($hospital_id){
+        $hospital = Hospital::find($hospital_id);
+        $doctors = $hospital->doctors;
+        $cnt =1;
+
+        return view('doctors.doctors',compact('doctors', 'cnt'));
+    }
+
+    public function getAllDoctors(){
+        $doctors = Doctor::with('hospital')->get();
+        $cnt =1;
+        return view('doctors.doctors',compact('doctors', 'cnt'));
+    }
+    public function getHospitalsHasDoctors()
+    {
+       $hospitals = Hospital::whereHas('doctors')->get();
+       return $hospitals;
+    }
+
+    public function getHospitalsHasDoctorsMales(){
+        $hospitals = Hospital::with('doctors')->whereHas('doctors',function ($q){
+            $q->where('gender','male');
+        })->get();
+        return $hospitals;
+    }
+
+    public function getHospitalsNotHasDoctors(){
+            $hospital = Hospital::whereDoesNtHave('doctors')->get();
+            return $hospital;
+    }
+
+    public function deleteHospital($hospital_id){
+//        $hospital = Hospital::with('doctors')->find($hospital_id);
+//        if(!$hospital){
+//            return redirect()->back()->with(['error'=>'hospital not found']);
+//        }
+//        foreach ($hospital->doctors as $doctor ){
+//            $doctor->delete();
+//        }
+
+        $hospital = Hospital::find($hospital_id);
+        $hospital->doctors()->delete();
+        $hospital->delete();
+        return redirect()->route('hospitals')->with(['success'=>'hospital deleted successfully']);
+    }
+
+    public function deleteDoctor($doctor_id){
+        $doctor = Doctor::find($doctor_id);
+        if(!$doctor){
+            return redirect()->back()->with(['error'=>'Doctor not found']);
+        }
+        $doctor->delete();
+        return redirect()->back()->with(['success'=>'Doctor deleted successfully']);
     }
 }
