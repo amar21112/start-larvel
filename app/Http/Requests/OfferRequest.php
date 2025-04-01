@@ -24,6 +24,7 @@ class OfferRequest extends FormRequest
     public function rules()
     {
         return [
+            'photo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name_ar' => 'required|max:100|unique:offers,name_ar',
             'name_en' => 'required|max:100|unique:offers,name_en',
             'offer_price' => 'required|numeric',
@@ -39,6 +40,10 @@ class OfferRequest extends FormRequest
      * */
     public function messages(){
         return $messages = [
+            'photo.required'=>'photo is required',
+            'photo.image'=>'photo is not valid',
+            'photo.mimes'=>'photo is not valid',
+            'photo.max'=>'photo is too large',
             'name_ar.required'=>__('messages.offer_name_required'),
             'name_en.required'=>__('messages.offer_name_required'),
             'name_ar.unique'=>__('messages.offer_name_unique'),

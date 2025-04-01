@@ -25,48 +25,38 @@
                 <div class = "form-group">
                     <label for ="OfferName">{{__("creations.photo")}}</label>
                     <input type="file" class="form-control" name ="photo" placeholder="choice photo">
-                    @error('photo')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="photo_error" class="form-text text-danger"></small>
                 </div>
 
                 <div class = "form-group">
                     <label for ="OfferName">{{__("creations.offer_name_ar")}}</label>
                     <input type="text" class="form-control" name ="name_ar" placeholder="Enter offer name">
-                    @error('name_ar')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="name_ar_error" class="form-text text-danger"></small>
                 </div>
                 <div class = "form-group">
                     <label for ="OfferName">{{__("creations.offer_name_en")}}</label>
                     <input type="text" class="form-control" name ="name_en" placeholder="Enter offer name">
-                    @error('name_en')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="name_en_error" class="form-text text-danger"></small>
                 </div>
 
                 <div class = "form-group">
                     <label for ="OfferPrice">{{__("creations.offer_price")}}</label>
                     <input type="text" class="form-control" name ="offer_price" placeholder="Enter offer price">
-                    @error('offer_price')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="offer_price_error" class="form-text text-danger"></small>
                 </div>
 
                 <div class = "form-group">
                     <label for ="OfferDetails">{{__("creations.offer_details_ar")}}</label>
                     <input type="text" class="form-control" name ="detail_ar" placeholder="Enter offer details">
-                    @error('detail_ar')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+
+                    <small id="detail_ar_error" class="form-text text-danger"></small>
+
                 </div>
 
                 <div class = "form-group">
                     <label for ="OfferDetails">{{__("creations.offer_details_en")}}</label>
                     <input type="text" class="form-control" name ="detail_en" placeholder="Enter offer details">
-                    @error('detail_en')
-                    <small class="form-text text-danger">{{$message}}</small>
-                    @enderror
+                    <small id="detail_en_error" class="form-text text-danger"></small>
                 </div>
                 <div>
                     <button id="save_offer"  class="btn btn-primary">{{__("creations.save")}}</button>
@@ -81,7 +71,12 @@
     <script>
         $(document).on('click','#save_offer', function (e){
             e.preventDefault();
-
+            $('#photo_error').text('');
+            $('#name_ar_error').text('');
+            $('#name_en_error').text('');
+            $('#offer_price_error').text('');
+            $('#detail_ar_error').text('');
+            $('#detail_en_error').text('');
             var formData = new FormData($('#saveOfferForm')[0]);
 
             $.ajax({
@@ -96,12 +91,13 @@
                         if(data.status === true){
                             $('#msg_success').show();
                         }
-                        if(data.status === false){
-                            $('#msg_fail').show();
-                        }
+
                     },
                     error:function (reject){
-
+                        var response = $.parseJSON(reject.responseText);
+                        $.each(response.errors,function (key , val){
+                            $("#"+key+"_error").text(val[0]);
+                        });
                     }
 
                 }
