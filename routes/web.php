@@ -70,6 +70,8 @@ Route::group(['namespace'=>'Relations'],function(){
     Route::get('doctors' , 'RelationController@getAllDoctors')->name('doctors');
 
     Route::get('doctors/{hospital_id}' , 'RelationController@getAllDoctorsOfHospital')->name('doctorsOfHospital');
+    Route::get('doctor-service/{doctor_id}' , 'RelationController@getDoctorServiceById')->name('serviceOfDoctor');
+
     Route::get('delete-hospital/{hospital_id}' , 'RelationController@deleteHospital')->name('delete.hospital');
     Route::get('delete-doctor/{doctor_id}' , 'RelationController@deleteDoctor')->name('delete.doctor');
 
@@ -77,7 +79,11 @@ Route::group(['namespace'=>'Relations'],function(){
     Route::get('hospital_has_doctors_male' , 'RelationController@getHospitalsHasDoctorsMales');
     Route::get('hospital_Not_has_doctors' , 'RelationController@getHospitalsNotHasDoctors');
 
+    Route::get('doctor-services' , 'RelationController@getDoctorServices');
+    Route::get('service-doctors' , 'RelationController@getServiceDoctors');
 
+    Route::get('add-service-doctor/{doctor_id}' , 'RelationController@addServiceDoctor')->name('add.service.doctor');
+    Route::post('save-adding-service' , 'RelationController@storeServiceDoctor')->name('store.service.doctor');
 });
 
 

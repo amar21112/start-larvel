@@ -16,7 +16,7 @@
             @endif
             <div class="content">
                 <div class="title m-b-md">
-                    Doctors
+                   Services
                 </div>
 
                 <table class="table table-striped table-dark">
@@ -24,27 +24,15 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>title</th>
-                        <th>gender</th>
-                        <th>hospital</th>
-                        <th>control</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @if(isset($doctors) && $doctors->count() > 0)
-                        @foreach($doctors as $doctor)
+                    @if(isset($services) && $services->count() > 0)
+                        @foreach($services as $service)
 
                             <tr>
-                                <th >{{$cnt++}}</th>
-                                <td>{{$doctor->name}}</td>
-                                <td>{{$doctor->title}}</td>
-                                <td>{{$doctor->gender}}</td>
-                                <td>{{$doctor->hospital->name}}</td>
-                                <td>
-                                    <a href="{{route('serviceOfDoctor' , $doctor->id)}}" class="btn btn-success">show services</a>
-                                    <a href="{{route('add.service.doctor' , $doctor->id)}}" class="btn btn-success">add services</a>
-                                    <a href="{{route('delete.doctor' , $doctor->id)}}" class="btn btn-danger">delete</a>
-                                </td>
+                                <th >{{$service->id}}</th>
+                                <td>{{$service->name}}</td>
                             </tr>
 
                         @endforeach
@@ -52,6 +40,7 @@
 
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

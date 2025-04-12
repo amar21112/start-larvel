@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Relations;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\Hospital;
+use App\Models\Service;
 use App\User;
 use App\Models\Phone;
+use Illuminate\Http\Request;
 
 class RelationController extends Controller
 {
@@ -141,5 +143,50 @@ class RelationController extends Controller
         }
         $doctor->delete();
         return redirect()->back()->with(['success'=>'Doctor deleted successfully']);
+    }
+
+    public function getDoctorServices()
+    {
+      /*  $doctor = Doctor::find(10);
+        $services = $doctor->services;
+
+        return $services;*/
+        return Doctor::with('services')->find(10);
+    }
+
+    public function getServiceDoctors(){
+        $service = Service::with('doctors')->find(1);
+        return $service->doctors;
+    }
+
+    public function getDoctorServiceById($doctor_id){
+
+        $doctor = Doctor::find($doctor_id);
+        if(!$doctor){
+            return redirect()->back()->with(['error'=>'Doctor not found']);
+        }
+        $services = $doctor->services;
+        return view('doctors.services',compact('services'));
+    }
+
+    public function addServiceDoctor($doctor_id)
+    {
+        $doctors= Doctor::select('id' , 'name')->get();
+        $services= Service::select('id' , 'name')->get();
+
+        return view('doctors.addService' , compact(['doctors','services']));
+    }
+
+    public function storeServiceDoctor(Request $request){
+
+        $doctor = Doctor::find($request->doctor_id);
+        if(!$doctor){
+            return redirect()->back()->with(['error'=>'Doctor not found']);
+        }
+//        $doctor->services()->attach($request->service_ids);
+//        $doctor->services()->sync($request->service_ids);
+        $doctor->services()->syncWithoutDetaching($request->service_ids);
+
+        return  redirect()->back()->with(['success'=>'Service added successfully']);
     }
 }
