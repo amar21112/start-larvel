@@ -84,6 +84,13 @@ Route::group(['namespace'=>'Relations'],function(){
 
     Route::get('add-service-doctor/{doctor_id}' , 'RelationController@addServiceDoctor')->name('add.service.doctor');
     Route::post('save-adding-service' , 'RelationController@storeServiceDoctor')->name('store.service.doctor');
+
+
+    ######## has one through
+
+    Route::get('has-one-through' , 'RelationController@getPatientDoctor')->name('get.patient.doctor');
+    Route::get('has-many-through' , 'RelationController@getCountryDoctors')->name('get.county.doctors');
 });
+
 
 
