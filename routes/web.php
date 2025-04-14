@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-
+define('PAGINATION_COUNT', 4);
 Auth::routes(['verify' => true]);
 
 Route::get('/', function () {

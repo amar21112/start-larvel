@@ -80,6 +80,16 @@ class CrudController extends Controller
         else
             $offers = Offer::select('offer_id','name_en','offer_price','detail_en')->get();*/
 
+       /* $locale = LaravelLocalization::getCurrentLocale();
+        $offers = Offer::select(
+            'id',
+            'offer_price',
+            'photo',
+            'name_'.$locale.' as name',
+            'detail_'.$locale.' as detail'
+        )->get();*/
+
+        #### paginate result ####
         $locale = LaravelLocalization::getCurrentLocale();
         $offers = Offer::select(
             'id',
@@ -87,9 +97,10 @@ class CrudController extends Controller
             'photo',
             'name_'.$locale.' as name',
             'detail_'.$locale.' as detail'
-        )->get();
+        )->paginate(PAGINATION_COUNT);
 
-        return view('offers.all', compact('offers'));
+          return view('offers.paginations', compact('offers'));
+//        return view('offers.all', compact('offers'));
 //        return view('offers.all' , compact('offers') , ["lang" => $locale] );
     }
 //    protected function getRules(){
