@@ -204,4 +204,23 @@ class RelationController extends Controller
         $country = Country::with('doctors')->find(1);
         return $country;
     }
+
+    public function getDoctor()
+    {
+       $doctors = Doctor::select('id' , 'name' , 'gender')->get();
+
+     /*
+       if(isset($doctors) && $doctors->count() > 0){
+           foreach($doctors as $doctor){
+               $doctor->gender = ($doctor->gender == '0')?'Male':'Female';
+           }
+            return $doctors;
+       }
+     */
+
+       return $doctors;
+
+    }
+
+
 }

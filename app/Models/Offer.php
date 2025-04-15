@@ -26,4 +26,9 @@ class Offer extends Model
     public function scopeInvalid($query){
         return $query->where('status' , 0)->whereNull('photo');
     }
+
+    public function setNameEnAttribute($value)
+    {
+        $this->attributes['name_en'] = strtoupper($value);
+    }
 }

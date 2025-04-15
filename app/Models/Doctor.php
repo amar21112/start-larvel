@@ -19,4 +19,10 @@ class Doctor extends Model
     {
         return $this->belongsToMany('App\Models\Service', 'doctor_service' , 'doctor_id' , 'service_id','id', 'id');
     }
+
+    public function getGenderAttribute($value)
+    {
+        return $value = ($value == '0')?'Male':'Female';
+    }
+
 }

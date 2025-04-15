@@ -91,6 +91,8 @@ Route::group(['namespace'=>'Relations'],function(){
 
     Route::get('has-one-through' , 'RelationController@getPatientDoctor')->name('get.patient.doctor');
     Route::get('has-many-through' , 'RelationController@getCountryDoctors')->name('get.county.doctors');
+
+    Route::get('accessor' , 'RelationController@getDoctor');
 });
 
 
