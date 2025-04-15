@@ -29,6 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         Route::get('edit/{offer_id}', 'CrudController@editOffer')->name('offers.edit');
         Route::get('delete/{offer_id}', 'CrudController@deleteOffer')->name('offers.delete');
         Route::post('update/{offer_id}', 'CrudController@updateOffer')->name('offers.update');
+        Route::get('get-all-inactive-offers', 'CrudController@getAllInactiveOffers');
 
     });
     Route::get('youtube', 'ShowVideo@getVideo')->name('youtube')->middleware('auth');

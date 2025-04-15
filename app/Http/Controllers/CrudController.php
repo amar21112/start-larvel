@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Traits\OfferTrait;
+use App\Scopes\OfferScopes;
 
 class CrudController extends Controller
 {
@@ -160,4 +161,11 @@ class CrudController extends Controller
         return redirect()->route("offers.all" , $offer_id)->with(['success' => 'Offer deleted successfully']);
     }
 
+    public function getAllInactiveOffers(){
+//        $inActiveOffers = Offer::where('status' , 0)->get();
+        // globale scope
+//        $inActiveOffers = Offer::get();
+//        return $inActiveOffers;
+        return Offer::withoutGlobalScope(OfferScopes::class)->get();
+    }
 }
